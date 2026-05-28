@@ -28,42 +28,56 @@ def fetch_reddit_post(subreddit):
         "User-Agent" : "reddit-fetcher/1.0"
     }
 
-    r = requests.get(url, headers = headers, params = params)
+    try :
+        r = requests.get(url, headers = headers, params = params)
 
-    data = r.json()
-    pretty_data = json.dumps(data, indent = 4)
-    #print(pretty_data)
+        data = r.json()
+        pretty_data = json.dumps(data, indent = 4)
+        print(pretty_data)
 
-    count = 1
-    for i in data["data"]["children"]:
+        count = 1
+        for i in data["data"]["children"]:
 
-        if i["data"]["title"] == "":
+            if i["data"]["title"] == "":
 
-            post = i["data"]["crosspost_parent_list"][0]["title"]
-            likes = i["data"]["crosspost_parent_list"][0]["score"]
-            comments = i["data"]["crosspost_parent_list"][0]["num_comments"]
-            link = i["data"]["crosspost_parent_list"][0]["url"]
+                post = i["data"]["crosspost_parent_list"][0]["title"]
+                likes = i["data"]["crosspost_parent_list"][0]["score"]
+                comments = i["data"]["crosspost_parent_list"][0]["num_comments"]
+                link = i["data"]["crosspost_parent_list"][0]["url"]
 
-            print("----------------------------------------------------------------")
-            print(f"{count}. {post}\n")
-            print(f"👍 Likes : {likes}  | 💬 Comments : {comments}")
-            print(f"🔗link : {link}")
-            print("----------------------------------------------------------------\n\n")
+                print("----------------------------------------------------------------")
+                print(f"{count}. {post}\n")
+                print(f"👍 Likes : {likes}  | 💬 Comments : {comments}")
+                print(f"🔗link : {link}")
+                print("----------------------------------------------------------------\n\n")
 
-        else:
+            else:
 
-            post = i["data"]["title"]
-            likes = i["data"]["score"]
-            comments = i["data"]["num_comments"]
-            link = i["data"]["url"]
+                post = i["data"]["title"]
+                likes = i["data"]["score"]
+                comments = i["data"]["num_comments"]
+                link = i["data"]["url"]
 
-            print("----------------------------------------------------------------")
-            print(f"{count}. {post}\n")
-            print(f"👍 Likes : {likes}  | 💬 Comments : {comments}")
-            print(f"🔗link : {link}")
-            print("----------------------------------------------------------------\n\n")
+                print("----------------------------------------------------------------")
+                print(f"{count}. {post}\n")
+                print(f"👍 Likes : {likes}  | 💬 Comments : {comments}")
+                print(f"🔗link : {link}")
+                print("----------------------------------------------------------------\n\n")
 
-        count = count + 1
+            count = count + 1
+
+    except requests.exceptions.ConnectionError:
+        print("No Internet COnnection : Try Again !")
+    except requests.exceptions.Timeout:
+        print("Server took too long to respond")
+    except requests.exceptions.RequestException as e:
+        print(e)
+    except KeyError as e:
+        print(f"Unexpected data structure : {e}")
+    except requests.exceptions.HTTPError as e:
+        print(f"HTTP Error : {e}")
+    except json.JSONDecodeError:
+        print("Failed to parse response.")
 
 """
 //////////////////////////////////////////////////////////////////////
