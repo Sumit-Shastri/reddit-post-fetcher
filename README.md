@@ -37,3 +37,7 @@ python reddit-post-fetcher.py india
 ## 🔑 API Used
 Reddit Public JSON API — no key needed!
 https://www.reddit.com/r/{subreddit}/top.json
+
+## 📸 Demo
+
+![img.png](img.png)
