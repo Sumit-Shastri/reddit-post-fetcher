@@ -6,10 +6,13 @@
 
 import requests
 import json
+import sys
 
 """
 //////////////////////////////////////////////////////////////////////
-//  Method name : fetch_reddit_post()
+//  Method name  : fetch_reddit_post()
+//  input        : subreddit          --> name of topic
+//  output       : top 5 posts on reddit on basis of subreddit
 //////////////////////////////////////////////////////////////////////
 """
 
@@ -68,7 +71,16 @@ def fetch_reddit_post(subreddit):
 //////////////////////////////////////////////////////////////////////
 """
 
-fetch_reddit_post("laptop")
+subreddit = ""
+
+if len(sys.argv) < 2:
+    print("Please provide subreddit.")
+    print("Usage : python reddit-post-fetcher.py <subreddit>")
+    sys.exit()
+
+subreddit = sys.argv[1]
+
+fetch_reddit_post(subreddit)
 
 
 """
