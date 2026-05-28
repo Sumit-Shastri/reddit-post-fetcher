@@ -33,7 +33,7 @@ def fetch_reddit_post(subreddit):
 
         data = r.json()
         pretty_data = json.dumps(data, indent = 4)
-        print(pretty_data)
+        #print(pretty_data)
 
         count = 1
         for i in data["data"]["children"]:
